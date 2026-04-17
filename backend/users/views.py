@@ -220,10 +220,11 @@ class GitHubLoginView(APIView):
                 username = f"{base_username}{counter}"
 
             user = User(username=username, email=email or "")
-            user.role = role if role in (User.USER, User.CREATOR) else User.USER
-            # Password not required for OAuth users
             user.set_unusable_password()
             user.auth_provider = "github"
+        
+        # Update role for both new and existing users
+        user.role = role if role in (User.USER, User.CREATOR) else User.USER
 
         # Update profile fields
         if gh_name:
