@@ -2,6 +2,13 @@
 
 Quick setup and run notes for local development.
 
+Clone
+
+```bash
+git clone <repo-url> ~/Desktop/ahoum
+cd ~/Desktop/ahoum
+```
+
 Prerequisites
 
 - Git
@@ -31,6 +38,7 @@ MINIO_ROOT_PASSWORD=minioadmin
 MINIO_BUCKET_NAME=ahoum-media
 MINIO_INTERNAL_ENDPOINT=http://minio:9000
 MINIO_PUBLIC_ENDPOINT=http://localhost/media
+SEED_DEMO_DATA=1
 ```
 
 Frontend (create `frontend/.env`):
@@ -48,10 +56,17 @@ Build and run all services:
 sudo docker compose up --build
 ```
 
+Stop all services:
+
+```bash
+sudo docker compose down
+```
+
 Notes
 
 - nginx is exposed on port 80. If that port is in use, stop the occupying service or change the compose ports.
 - MinIO console is available internally at container port 9001; the setup proxies only `/media/` for browser access.
+- On startup, the backend seeds 2 demo creators and 6 demo sessions by default. Set `SEED_DEMO_DATA=0` in `backend/.env` to disable that.
 
 OAuth client setup (GitHub)
 
@@ -72,8 +87,13 @@ Example demo flow
 1. Open `http://localhost/` in your browser.
 2. Click "Continue with GitHub" — GitHub will redirect back to `http://localhost/login?code=...&provider=github`.
 3. Frontend exchanges the code with the backend and receives JWTs.
-4. Use the frontend UI to create a session (via the app UI which POSTs to `${VITE_API_URL}/sessions/`).
-5. Book a session from another user account or via the UI to hit `${VITE_API_URL}/bookings/`.
+4. Browse the seeded marketplace sessions from the 2 demo creators: `maya_wave` and `leo_afterglow`.
+5. Use the frontend UI to create a session (via the app UI which POSTs to `${VITE_API_URL}/sessions/`).
+6. Book a session from another user account or via the UI to hit `${VITE_API_URL}/bookings/`.
+
+Role Management
+
+- To change your role between USER (Viewer) and CREATOR, simply re-login via GitHub OAuth and select the desired role during the login flow.
 
 Troubleshooting
 
