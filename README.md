@@ -1,14 +1,5 @@
 # Ahoum — Development README
 
-Quick setup and run notes for local development.
-
-Clone
-
-```bash
-git clone <repo-url> ~/Desktop/ahoum
-cd ~/Desktop/ahoum
-```
-
 Prerequisites
 
 - Git
@@ -47,6 +38,8 @@ Frontend (create `frontend/.env`):
 VITE_API_URL=http://localhost/api
 VITE_GITHUB_CLIENT_ID=your-github-client-id
 ```
+
+.env are explictly pushed to make setup easier, just contains the oauth token, not serious
 
 Docker
 
